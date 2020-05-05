@@ -26,6 +26,7 @@ hnswlib的核心代码代码包含4个函数：
 - 其他层的数据: 主要是每个点在其他层的neighbors
 
 第0层的存储结构(`data_level0_memory_`)：
+
 该层先按点切分，每个点一个固定长度`size_data_per_element_`，这个长度中按顺序存了4个内容：
 - `neighbor个数`: 固定int长度
 - `neighbors`: 最多M个neighbors，所以固定 M 个int长度
@@ -33,13 +34,16 @@ hnswlib的核心代码代码包含4个函数：
 - `label`: 固定长度
 
 所以整体看起来就是这样子
+```
 [`#neighbors`, [`neighbor1`,`neighbor2`,`neighbor3`], `data`, `label1`]
 [`#neighbors`, [`neighbor1`,`neighbor2`,`neighbor3`], `data`, `label2`]
 [`#neighbors`, [`neighbor1`,`neighbor2`,`neighbor3`], `data`, `label3`]
 ...
 [`#neighbors`, [`neighbor1`,`neighbor2`,`neighbor3`], `data`, `labeln`]
+```
 
 其他层存储（`link_list`）:
+
 也是按点来切分，每个点非固定大小。每个点内部包含两个部分：
 - 该点数据的总长度: 固定长度int，(`linkListSize`)
 - 该点每一层的neighbors：非固定长度，总长度为`该点层级*每层固定长度(size_links_per_element_)`
@@ -48,11 +52,13 @@ hnswlib的核心代码代码包含4个函数：
 - `neighbors`: 最多M个neighbors，所以固定 M 个int长度
 
 所以整体看起来就是这样子
+```
 [`linkListSize`, [`l1#neighbors`, [`neighbor1`,`neighbor2`,`neighbor3`]], [`l2#neighbors`, [`neighbor1`,`neighbor2`,`neighbor3`]], [`l3#neighbors`, [`neighbor1`,`neighbor2`,`neighbor3`]], ...]
 [`linkListSize`, [`l1#neighbors`, [`neighbor1`,`neighbor2`,`neighbor3`]], [`l2#neighbors`, [`neighbor1`,`neighbor2`,`neighbor3`]], [`l3#neighbors`, [`neighbor1`,`neighbor2`,`neighbor3`]], ...]
 [`linkListSize`, [`l1#neighbors`, [`neighbor1`,`neighbor2`,`neighbor3`]], [`l2#neighbors`, [`neighbor1`,`neighbor2`,`neighbor3`]], [`l3#neighbors`, [`neighbor1`,`neighbor2`,`neighbor3`]], ...]
 ...
 [`linkListSize`, [`l1#neighbors`, [`neighbor1`,`neighbor2`,`neighbor3`]], [`l2#neighbors`, [`neighbor1`,`neighbor2`,`neighbor3`]], [`l3#neighbors`, [`neighbor1`,`neighbor2`,`neighbor3`]], ...]
+```
 
 ## 构建编译调试环境
 不想在本机搞，不想在开发机上搞，原因是害怕安装软件把把环境搞混乱了。
@@ -84,9 +90,6 @@ docker run -d --name pcworker --rm -v /Users/pengchao/git/gcc/:/gcc -v /Users/pe
 launch.json
 ```json
 {
-    // Use IntelliSense to learn about possible attributes.
-    // Hover to view descriptions of existing attributes.
-    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
         {
@@ -116,8 +119,6 @@ launch.json
 tasks.json
 ```json
 {
-    // See https://go.microsoft.com/fwlink/?LinkId=733558
-    // for the documentation about the tasks.json format
     "version": "2.0.0",
     "tasks": [
         {
